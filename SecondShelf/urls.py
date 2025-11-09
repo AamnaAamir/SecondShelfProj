@@ -25,7 +25,7 @@ urlpatterns = [
     path('wish-size', wish_size, name='wish_size'),
     path('',include('users.urls')),
     path('',include('books.urls')),
-    path('',include('contact.urls')),
+    #path('',include('contact.urls')),
     path('',include('wishlist.urls')),
     # path('', include('cart.urls')),     
     # path('', include('orders.urls')), 

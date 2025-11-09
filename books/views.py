@@ -1,8 +1,8 @@
 import itertools
 from django.shortcuts import render
 from django.views.generic import ListView
-from comments.forms import CommentForm
-from comments.models import Comments
+# from comments.forms import CommentForm
+# from comments.models import Comments
 
 from django.contrib.auth.decorators import login_required
 from categories.models import bookCategory
@@ -51,28 +51,14 @@ def bookDetails(request, *args, **kwargs):
     books.visit_count += 1
     books.save()
 
-    commentForm = CommentForm(request.POST or None)
-    if commentForm.is_valid():
-        comment = commentForm.cleaned_data.get('comment')
-        Comments.objects.create(
-            user=request.user,
-            book=books,
-            comment=comment,
-            date=datetime.today(),
-        )
-        commentForm = CommentForm()
-    if book_id is not None:
-        book_comment = Comments.objects.filter(book=book_id)
+    
     related_books = Book.objects.get_queryset().filter(category__book=books).distinct()
     grouped_related_books = my_grouper(4, related_books)
     grouped_related_books = list(grouped_related_books)
     context = {
         'books': books,
         'related_books': grouped_related_books,
-        'wish_form' :new_wish_form,
-        'commentForm':commentForm,
-        'comments': book_comment
-        
+        'wish_form' :new_wish_form  
     }
     return render(request, './book_details.html', context)
 
