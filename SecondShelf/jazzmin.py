@@ -1,21 +1,21 @@
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "The Book Bazaar",
+    "site_title": "SecondShelf",
 
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "The Book Bazaar",
+    "site_header": "SecondShelf",
 
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "The Book Bazaar",
+    "site_brand": "SecondShelf",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "images/logo.PNG",
+    "site_logo": "images/logo0.png",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": "images/logo.PNG",
+    "login_logo": "images/logo0.png",
 
     # Logo to use for login form in dark themes (defaults to login_logo)
-    "login_logo_dark": "images/logo.PNG",
+    "login_logo_dark": "images/logo0.png",
 
     # CSS classes that are applied to the logo above
     "site_logo_classes": "img-circle",
@@ -24,10 +24,10 @@ JAZZMIN_SETTINGS = {
     "site_icon": None,
 
     # Welcome text on the login screen
-    "welcome_sign": "Welcome to the The Book Bazaar",
+    "welcome_sign": "Welcome to SecondShelf - you're second-hand bookstore",
 
     # Copyright on the footer
-    "copyright": "The Book Bazaar Ltd",
+    "copyright": "SecondShelf Ltd",
 
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string 
@@ -38,10 +38,7 @@ JAZZMIN_SETTINGS = {
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
 
-    ############
-    # Top Menu #
-    ############
-
+    # Top Menu 
     # Links to put along the top menu
     "topmenu_links": [
 
@@ -58,20 +55,16 @@ JAZZMIN_SETTINGS = {
         {"app": "books"},
     ],
 
-    #############
-    # User Menu #
-    #############
-
+    
+    # User Menu 
     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
     "usermenu_links": [
         # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
         {"model": "auth.user"}
     ],
 
-    #############
-    # Side Menu #
-    #############
-
+    
+    # Side Menu 
     # Whether to display the side menu
     "show_sidebar": True,
 
@@ -108,15 +101,11 @@ JAZZMIN_SETTINGS = {
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
 
-    #################
-    # Related Modal #
-    #################
+    # Related Modal 
     # Use modals instead of popups
     "related_modal_active": False,
 
-    #############
-    # UI Tweaks #
-    #############
+    # UI Tweaks 
     # Relative paths to custom CSS/JS scripts (must be present in static files)
     "custom_css": None,
     "custom_js": None,
@@ -125,9 +114,7 @@ JAZZMIN_SETTINGS = {
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": True,
 
-    ###############
-    # Change view #
-    ###############
+    # Change view 
     # Render out the change view as a single form, or in tabs, current options are
     # - single
     # - horizontal_tabs (default)

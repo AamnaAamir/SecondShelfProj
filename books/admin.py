@@ -10,8 +10,11 @@ from .models import Book
 class productAdmin(admin.ModelAdmin):
     # Fields to display as columns in the admin list view
     list_display = ['__str__', 'title', 'price','active']
+    
+    # Make visit_count read-only
+    readonly_fields = ('visit_count',)
 
-     # Optional nested Meta class — specifies which model this admin configuration belongs to
+    # Optional nested Meta class — specifies which model this admin configuration belongs to
     class Meta:
         model = Book
 

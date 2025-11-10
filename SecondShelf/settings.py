@@ -50,8 +50,6 @@ INSTALLED_APPS = [
     'django_render_partial',
     'books',
     'categories',
-    # 'comments',
-    # 'contact',
     'users',
     'wishlist',
     'orders',

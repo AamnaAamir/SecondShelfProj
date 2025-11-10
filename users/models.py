@@ -23,13 +23,14 @@ class user_profile(models.Model):
 
   city = models.CharField(max_length=100, blank=True, null=True)
   address = models.CharField(max_length=500, blank=True, null=True)
-  gender = models.CharField(max_length=10,default='Male')
+  gender = models.CharField(max_length=10,default='Female')
   phone_num = models.CharField(max_length=15, blank=True, null=True)
   whatsapp_num = models.CharField(max_length=15, blank=True, null=True)
 
   # profile picture upload field (saved using upload_image_path)
-  profile_pic = models.ImageField(default='default.jpg', upload_to=upload_image_path)
-  
+  #profile_pic = models.ImageField(default='default.jpg', upload_to=upload_image_path)
+  profile_pic = models.ImageField(default='default.jpg',upload_to=upload_image_path,blank=True,null=True
+)
   # return username as readable name in admin or print()
   def __str__(self):
     return str(self.user.username)

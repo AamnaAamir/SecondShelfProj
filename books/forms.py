@@ -31,22 +31,15 @@ class sellBookForm(forms.Form):
         label="Book Price"
     )
   CHOICES =(
-    (1, "Novel"),
-    (2, "History"),
-    (3, "Politics"),
-    (4, "Psychology"),
-    (5, "Philosophy"),
-    (6, "Literature"),
-    (7, "Medical"),
-    (8, "Computer"),
-    (9, "Economic"),
-    (10, "Sport"),
-    (11, "Management"),
-    (12, "Engineering"),
-    (13, "Social"),
-    (14, "Law"),
-    (15, "Languages"),
-    (16, "other"),
+    (1, "Children's Books"),
+    (2, "Young Adult"),
+    (3, "Comics and Graphic Novels"),
+    (4, "Fiction"),
+    (5, "Entry Test Preparation"),
+    (6, "Non-Fiction"),
+    (7, "Academic Textbooks"),
+    (8, "Literature & Poetry"),
+    (9, "Reference Materials"),
 )
   category = forms.ChoiceField(
         widget=forms.Select(attrs={"class":"form-select mb-4",}),
