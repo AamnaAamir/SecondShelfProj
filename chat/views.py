@@ -11,7 +11,7 @@ def user_chats(request):
     context = {
         'chats': chats
     }
-    return render(request, 'chat/chats.html', context)
+    return render(request, 'chats.html', context)
 
 
 @login_required(login_url='/login')
@@ -33,7 +33,7 @@ def view_chat(request, chat_id):
         'messages': messages,
         'form': form
     }
-    return render(request, 'chat/chat_detail.html', context)
+    return render(request, 'chat_detail.html', context)
 
 
 @login_required(login_url='/login')

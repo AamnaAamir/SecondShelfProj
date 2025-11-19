@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'orders',
     'chat',
     'cart',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -141,10 +142,17 @@ STATICFILES_DIRS = [
 STATIC_ROOT =  BASE_DIR / "static_cdn/static_root"
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT =  BASE_DIR / "static_cdn/media_root"
+MEDIA_ROOT =  BASE_DIR / "static_cdn/media_root"     # so uploaded images go to static_cdn/media_root
+
+# Save outgoing emails as files (confirmation emails go to sent_emails folder)
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'  # make sure this folder exists
+DEFAULT_FROM_EMAIL = 'no-reply@secondshelf.local'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')

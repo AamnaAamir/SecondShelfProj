@@ -1,0 +1,27 @@
+{% extends 'shared/_mainLayout.html' %}
+{% block content %}
+<h1 class="heading"><span>Your Chats</span></h1>
+<div class="container">
+  {% if chats %}
+    <ul class="list-group">
+      {% for chat in chats %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          {% if chat.sender == request.user %}
+            <strong>{{ chat.receiver.username }}</strong>
+          {% else %}
+            <strong>{{ chat.sender.username }}</strong>
+          {% endif %}
+          <div class="small text-muted">Started: {{ chat.created_at }}</div>
+        </div>
+        <div>
+          <a href="/chat/{{ chat.id }}/" class="btn btn-sm btn-primary">Open</a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="alert alert-warning">No chats yet.</div>
+  {% endif %}
+</div>
+{% endblock %}

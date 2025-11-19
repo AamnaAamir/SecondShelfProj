@@ -1,4 +1,4 @@
-<div class="swiper-slide box">
+<!-- <div class="swiper-slide box">
     <div class="icons">
       <a href="" class="fas fa-search"></a>
       <a href="" class="fas fa-heart"></a>
@@ -12,4 +12,34 @@
       <div class="price">{{ books.price }}</div>
       <a href="{{ books.get_absolute_url }}" class="btn btn-warning">contact to seller</a>
     </div>
+  </div> -->
+<div class="swiper-slide box">
+  <div class="icons">
+    <a href="{{ books.get_absolute_url }}" class="fas fa-eye" title="Book Details"></a>
+    {% if request.user.is_authenticated %}
+      <form method="post" action="/cart/add/" class="d-inline ms-1">
+        {% csrf_token %}
+        <input type="hidden" name="book_id" value="{{ books.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button class="btn btn-sm" title="Add to cart" type="submit"><i class="fa-solid fa-cart-plus"></i></button>
+      </form>
+      <form method="post" action="/wishlist/user-wishlist" class="d-inline ms-1">
+        {% csrf_token %}
+        <input type="hidden" name="book_id" value="{{ books.id }}">
+        <button class="btn btn-sm" title="Add to wishlist" type="submit"><i class="fa-solid fa-heart"></i></button>
+      </form>
+    {% else %}
+      <a href="/login" class="btn btn-sm ms-1" title="Login to add to cart"><i class="fa-solid fa-cart-plus"></i></a>
+      <a href="/login" class="btn btn-sm ms-1" title="Login to add to wishlist"><i class="fa-solid fa-heart"></i></a>
+    {% endif %}
   </div>
+
+  <div class="image">
+    <img src="{{ books.image.url }}" alt="{{ books.title }}" />
+  </div>
+  <div class="content">
+    <h3>{{ books.title }}</h3>
+    <div class="price">{{ books.price }}</div>
+    <a href="{{ books.get_absolute_url }}" class="btn btn-warning">Book Details</a>
+  </div>
+</div>

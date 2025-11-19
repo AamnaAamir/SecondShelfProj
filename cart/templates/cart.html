@@ -1,0 +1,73 @@
+{% extends 'shared/_mainLayout.html' %}
+{% load static %}
+{% load math_filters %}
+{% block content %}
+<h1 class="heading"><span>Your Cart</span></h1>
+
+<div class="container my-4">
+  {% if cart and groups %}
+    <form method="post" action="/cart/update/">{% csrf_token %}
+      {% for seller, items in groups %}
+        <div class="card mb-3">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+              <strong>Seller:</strong> {{ seller.username }}
+            </div>
+            <div>
+              {% if request.user.is_authenticated %}
+                <a class="btn btn-outline-primary btn-sm" href="/chat/start/{{ seller.id }}/">Contact Seller</a>
+                <a class="btn btn-primary btn-sm" href="/orders/checkout?seller={{ seller.id }}">Checkout Seller</a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Book</th>
+                  <th>Price</th>
+                  <th>Qty</th>
+                  <th>Subtotal</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in items %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                    <a href="{{ item.book.get_absolute_url }}">
+                      <img src="{{ item.book.image.url }}" width="60" height="80" class="me-2" alt="">
+                      {{ item.book.title }}
+                    </a>
+                  </td>
+                  <td>{{ item.price }} Rs</td>
+                  <td>
+                    <input type="number" name="quantity_{{ item.id }}" value="{{ item.quantity }}" min="0" class="form-control w-25" />
+                  </td>
+                  <td>{{ item.quantity|mul:item.price }} Rs</td>
+                  <td>
+                    <a href="/cart/remove/{{ item.id }}/" class="btn btn-sm btn-danger">Remove</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      {% endfor %}
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div><strong>Grand total: </strong> {{ grand_total }} Rs</div>
+        <div>
+          <button class="btn btn-secondary" type="submit">Update Cart</button>
+          <a href="/orders/checkout/" class="btn btn-warning text-white">Checkout All</a>
+        </div>
+      </div>
+    </form>
+  {% else %}
+    <div class="alert alert-warning">Your cart is empty.</div>
+  {% endif %}
+</div>
+{% endblock %}

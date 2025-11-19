@@ -1,5 +1,6 @@
 from django import forms 
 from django.contrib.auth.models import User
+from categories.models import bookCategory
 
 class dateInput(forms.DateInput):
     input_type = 'date'
@@ -41,9 +42,9 @@ class sellBookForm(forms.Form):
     (8, "Literature & Poetry"),
     (9, "Reference Materials"),
 )
-  category = forms.ChoiceField(
-        widget=forms.Select(attrs={"class":"form-select mb-4",}),
-        choices=CHOICES, 
+  category = forms.ModelChoiceField(
+        queryset=bookCategory.objects.all(),
+        widget=forms.Select(attrs={"class": "form-select mb-4"}),
         label="Category"
     )
   

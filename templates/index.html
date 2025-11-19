@@ -116,6 +116,7 @@
         <div class="icons">
           <a href="" class="fas fa-search"></a>
           <a href="" class="fas fa-heart"></a>
+          <!-- <a href="/wishlist/" class="fas fa-heart"></a> -->
           <a href="{{ bk.get_absolute_url }}" class="fas fa-eye"></a>
         </div>
         <div class="image">
@@ -125,7 +126,7 @@
           <h3>{{ bk.title }}</h3>
           <h4>{{ bk.Author }}</h4>
           <div class="price">{{ bk.price }}</div>
-          <a href="{{ bk.get_absolute_url }}" class="btn btn-warning text-white">contact to seller</a>
+          <a href="{{ bk.get_absolute_url }}" class="btn btn-warning text-white">Book Details</a>
         </div>
       </div>
       {% endfor %}

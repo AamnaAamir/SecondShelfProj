@@ -19,6 +19,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import home_page,footer, wish_size
+# Import the specific view from the wishlist app
+from wishlist.views import remove_wish_item 
 
 urlpatterns = [
     path('', home_page),
@@ -26,12 +28,14 @@ urlpatterns = [
     path('',include('users.urls')),
     path('',include('books.urls')),
     #path('',include('contact.urls')),
-    path('',include('wishlist.urls')),
-    # path('', include('cart.urls')),     
-    # path('', include('orders.urls')), 
-    # path('', include('chat.urls')),
+    path('remove-wishlist-item/<int:detail_id>/', remove_wish_item),
+    path('wishlist/', include('wishlist.urls')),     
+    path('orders/', include('orders.urls')),
+    path('chat/', include('chat.urls')),
     path('footer',footer,name='footer'),
     path('admin/', admin.site.urls),
+    path('payment/', include('payment.urls')),
+    path('cart/', include('cart.urls')),
     # path('admin_tools_stats/', include('admin_tools_stats.urls')),
 ]
 

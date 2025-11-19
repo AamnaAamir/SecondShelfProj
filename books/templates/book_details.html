@@ -1,19 +1,30 @@
-{% extends 'shared/_mainLayout.html' %} 
-{% load static %} 
+{% extends 'shared/_mainLayout.html' %}
+{% load static %}
 {% load render_partial %}
+
 {% block content %}
 
 <h1 class="heading"><span>Book Detail</span></h1>
-<container class="book-detail">
-  <div class="detail-category" id="">
-    {% render_partial 'category_partial' %}
-</div>
 
-  <div class="book-section  ">
+<container class="book-detail">
+
+  <!-- Category Partial -->
+  <div class="detail-category">
+    {% render_partial 'category_partial' %}
+  </div>
+
+  <!-- Book Section -->
+  <div class="book-section d-flex gap-4">
+
+    <!-- Book Image -->
     <div class="book-image">
-      <img src=" {{ books.image.url }} " width="270px" alt="" />
+      <img src="{{ books.image.url }}" width="270px" alt="{{ books.title }}" />
     </div>
+
+    <!-- Book Description and Details -->
     <div class="description">
+
+      <!-- Book Details Table -->
       <table class="desc-table">
         <tr>
           <td class="desc-book-title" colspan="2">{{ books.title }}</td>
@@ -23,7 +34,7 @@
           <td>{{ books.Author }}</td>
         </tr>
         <tr>
-          <td>publisher:</td>
+          <td>Publisher:</td>
           <td>{{ books.publisher }}</td>
         </tr>
         <tr>
@@ -35,11 +46,11 @@
           <td>{{ books.language }}</td>
         </tr>
         <tr>
-          <td>price:</td>
-          <td><strong>{{ books.price }} </strong><span>Rs</span></td>
+          <td>Price:</td>
+          <td><strong>{{ books.price }}</strong> <span>Rs</span></td>
         </tr>
         <tr>
-          <td>date:</td>
+          <td>Date:</td>
           <td>{{ books.Date }}</td>
         </tr>
         <tr>
@@ -49,21 +60,38 @@
           </td>
         </tr>
       </table>
-      <form method="post" action="/user-wishlist">
-        {% csrf_token %}
-        {{ wish_form.book_id }}
-        <button type="submit" class="btn btn-warning my-3 text-white">Add to favorites</button>
-      </form>
+
+      <!-- Wishlist and Cart Buttons -->
+      <div class="d-flex gap-3 my-3">
+        <form method="post" action="{% url 'user-wishlist' %}">
+          {% csrf_token %}
+          {{ wish_form.book_id }}
+          <button type="submit" class="btn btn-outline-warning">Add to wishlist</button>
+        </form>
+
+        <form method="post" action="/cart/add/">
+          {% csrf_token %}
+          <input type="hidden" name="book_id" value="{{ books.id }}">
+          <div class="input-group">
+            <input type="number" name="quantity" value="1" min="1" class="form-control w-25" />
+            <button type="submit" class="btn btn-warning text-white">Add to cart</button>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
+
+  <!-- Seller Section -->
   <div class="owner description">
     <div class="owner-img">
-      <img src="{{ books.user.user_profile.profile_pic.url }}"  width=200 alt="" />
+      <img src="{{ books.user.user_profile.profile_pic.url }}" width="200" alt="{{ books.user.username }}" />
     </div>
+
     <div class="owner-desc">
       <table class="desc-table">
         <tr>
-          <td class="desc-book-title" colspan="2">Seller specifications</td>
+          <td class="desc-book-title" colspan="2">Seller Specifications</td>
         </tr>
         <tr>
           <td>Name:</td>
@@ -74,54 +102,66 @@
           <td>{{ books.user.user_profile.address }}</td>
         </tr>
         <tr>
-          <td>phone Num:</td>
+          <td>Phone Num:</td>
           <td>{{ books.user.user_profile.phone_num }}</td>
         </tr>
       </table>
-      <div class="owner-icons">
-        <a href="" class="text-secondary"
-          ><i class="fa-brands fa-whatsapp text-warning"></i> Whatsapp: &emsp; {{ books.user.user_profile.whatsapp_num }}</a
-        >
-    </div>
-    </div>
-  </div>
-  
-  <div class="message description px-5 py-4">
-    <h2><b>Comments</b></h1>
-    {% for comment in comments %}
-    <div class="all-commnets d-flex gap-4 mb-3">
-      <img src="{{ comment.user.user_profile.profile_pic.url }}" alt="" width="50" height="50" class="rounded-circle">
-      <div class="user ">
-        <p class="h5">{{ comment.user.username }} <span class="text-secondary h6">{{ comment.date }}</span></p>
-        <p class="h6">{{ comment.comment }}</p>
+
+      <div class="owner-icons my-2">
+        <a href="#" class="text-secondary">
+          <i class="fa-brands fa-whatsapp text-warning"></i> Whatsapp: &emsp; {{ books.user.user_profile.whatsapp_num }}
+        </a>
       </div>
-    </div>
-      {% endfor %}
-    {% if request.user.is_authenticated %}
-    <form action="" method="post" class="row mt-4">
-      {% csrf_token %}
-      <div class="col-md-8">{{ commentForm.comment }}</div>
-      <button type="submit" class="btn btn-warning btn-block text-white col-md-4">
-        Comment
-      </button>
-    </form>
+
+      <!-- Contact Seller Button -->
+      {% if request.user.is_authenticated %}
+        <a href="/chat/start/{{ books.user.id }}/" class="btn btn-outline-primary">Contact Seller (Chat)</a>
+      {% else %}
+        <a href="/login" class="btn btn-outline-primary">Login to contact seller</a>
       {% endif %}
+    </div>
   </div>
+
+  <!-- Comments Section -->
+  <div class="message description px-5 py-4">
+    <h2><b>Comments</b></h2>
+    {% for comment in comments %}
+      <div class="all-comments d-flex gap-4 mb-3">
+        <img src="{{ comment.user.user_profile.profile_pic.url }}" alt="" width="50" height="50" class="rounded-circle">
+        <div class="user">
+          <p class="h5">{{ comment.user.username }} <span class="text-secondary h6">{{ comment.date }}</span></p>
+          <p class="h6">{{ comment.comment }}</p>
+        </div>
+      </div>
+    {% endfor %}
+
+    {% if request.user.is_authenticated %}
+      <form action="" method="post" class="row mt-4">
+        {% csrf_token %}
+        <div class="col-md-8">{{ commentForm.comment }}</div>
+        <button type="submit" class="btn btn-warning btn-block text-white col-md-4">
+          Comment
+        </button>
+      </form>
+    {% endif %}
+  </div>
+
 </container>
+
+<!-- Related Books Section -->
 <section class="featured" id="featured">
   <h1 class="heading"><span>Related Books</span></h1>
   <div class="swiper container featured-slider">
     <div class="swiper-wrapper">
-    
       {% for related in related_books %}
         {% for bk in related %}
-        {% include './book_item_component.html' with books=bk %}
+          {% include './book_item_component.html' with books=bk %}
         {% endfor %}
       {% endfor %}
-    
     </div>
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
   </div>
 </section>
+
 {% endblock %}

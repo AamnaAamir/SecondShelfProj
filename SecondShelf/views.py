@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from books.models import Book
 from wishlist.models import Wish, wishDetail
+from cart.models import Cart, CartItem
 
 # footer back code
 def footer(request):
@@ -43,3 +44,15 @@ def wish_size(request):
         context['wishLen'] = len(wishes)
     return render(request, './shared/wish_notify.html', context)
 
+def cart_size(request):
+    context = {
+        'cartLen': 0,  # default 0
+    }
+    if request.user.is_authenticated:
+        # Get the user's cart
+        open_cart = Cart.objects.filter(user=request.user).first()
+        if open_cart:
+            # Count total items in the cart
+            items = CartItem.objects.filter(cart=open_cart)
+            context['cartLen'] = sum(item.quantity for item in items)  # total quantity
+    return render(request, './shared/cart_notify.html', context)

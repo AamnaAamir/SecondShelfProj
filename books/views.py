@@ -41,7 +41,8 @@ def my_grouper(n, iterable):
 def bookDetails(request, *args, **kwargs):
 
     book_id = kwargs['bookId']
-    new_wish_form = userWishlistForm(request.POST or None, initial={'book_id': book_id})
+    new_wish_form = userWishlistForm(initial={'book_id': book_id})
+
 
     books = Book.objects.get_by_id(book_id)
 
@@ -120,43 +121,3 @@ def sellBook(request):
     }
     return render(request, 'sell_book.html', context)
 
-# @login_required(login_url='/login')
-# def sellBook(request):
-#     sellForm = sellBookForm(request.POST or None, request.FILES or None)
-#     if sellForm.is_valid():
-#         bookName = sellForm.cleaned_data.get('book_name')
-#         book_author = sellForm.cleaned_data.get('book_author')
-#         book_publisher = sellForm.cleaned_data.get('book_publisher')
-#         book_edition = sellForm.cleaned_data.get('book_edition')
-#         book_language = sellForm.cleaned_data.get('book_language')
-#         price = sellForm.cleaned_data.get('price')
-#         category_id = sellForm.cleaned_data.get('category')  # integer from ChoiceField
-#         book_pic = sellForm.cleaned_data.get('book_pic')
-#         description = sellForm.cleaned_data.get('description')
-
-#         # Get actual category object
-#         category_obj = bookCategory.objects.get(id=category_id)
-
-#         # Save book first
-#         instance = Book.objects.create(
-#             user=request.user,
-#             title=bookName,
-#             Author=book_author,
-#             publisher=book_publisher,
-#             edition=book_edition,
-#             price=price,
-#             language=book_language,
-#             Date=now(),
-#             description=description,
-#             image=book_pic,
-#         )
-
-#         # Add M2M relation
-#         instance.category.add(category_obj)  
-
-#         sellForm = sellBookForm()  # reset form
-
-#     context = {
-#         'sellForm': sellForm
-#     }
-#     return render(request, 'sell_book.html', context)
