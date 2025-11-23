@@ -35,9 +35,10 @@ def payment_options(request, order_id):
                     payment_method_types=['card'],
                     line_items=[{
                         'price_data': {
-                            'currency': 'usd',
+                            'currency': 'pkr',
                             'product_data': {'name': f'Order #{order.id} - SecondShelf'},
-                            'unit_amount': int(order.total_amount) * 100,  # cents
+                            # Stripe requires smallest currency unit → paisa
+                            'unit_amount': int(order.total_amount * 100),
                         },
                         'quantity': 1,
                     }],
