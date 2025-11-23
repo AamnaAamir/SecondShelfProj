@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
 from orders.models import Order
+from cart.models import Cart,CartItem
 from .models import Payment
 from .forms import PaymentForm
 import stripe
@@ -55,6 +56,14 @@ def payment_options(request, order_id):
 
 @login_required(login_url='/login')
 def payment_success(request):
+    payment = Payment.objects.filter(user=request.user, status='pending').last()
+    if payment:
+        payment.status = 'completed'
+        payment.save()
+        # Remove items from cart now
+        cart = Cart.objects.filter(user=request.user).first()
+        if cart:
+            cart.items.filter(book__in=[d.book for d in payment.order.orderdetail_set.all()]).delete()
     return render(request, 'payment_success.html')
 
 

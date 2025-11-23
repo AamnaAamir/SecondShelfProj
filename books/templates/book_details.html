@@ -122,30 +122,6 @@
     </div>
   </div>
 
-  <!-- Comments Section -->
-  <div class="message description px-5 py-4">
-    <h2><b>Comments</b></h2>
-    {% for comment in comments %}
-      <div class="all-comments d-flex gap-4 mb-3">
-        <img src="{{ comment.user.user_profile.profile_pic.url }}" alt="" width="50" height="50" class="rounded-circle">
-        <div class="user">
-          <p class="h5">{{ comment.user.username }} <span class="text-secondary h6">{{ comment.date }}</span></p>
-          <p class="h6">{{ comment.comment }}</p>
-        </div>
-      </div>
-    {% endfor %}
-
-    {% if request.user.is_authenticated %}
-      <form action="" method="post" class="row mt-4">
-        {% csrf_token %}
-        <div class="col-md-8">{{ commentForm.comment }}</div>
-        <button type="submit" class="btn btn-warning btn-block text-white col-md-4">
-          Comment
-        </button>
-      </form>
-    {% endif %}
-  </div>
-
 </container>
 
 <!-- Related Books Section -->
