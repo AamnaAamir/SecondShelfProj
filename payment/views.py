@@ -7,7 +7,7 @@ from .models import Payment
 from .forms import PaymentForm
 import stripe
 
-stripe.api_key = getattr(settings, 'STRIPE_SECRET_KEY', '')
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 @login_required(login_url='/login')
 def payment_options(request, order_id):
